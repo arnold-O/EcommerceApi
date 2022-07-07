@@ -1,11 +1,11 @@
 const express = require("express");
 
-const errorHandler = require("./middlewares/errorHandler");
 
 // all route section begins
 const ProductRoutes = require("./route/productRoutes");
 const AuthRoutes = require("./route/authRoute");
 
+const errorHandler = require("./middlewares/error");
 const app = express();
 const morgan = require("morgan");
 

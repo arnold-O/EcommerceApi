@@ -1,25 +1,24 @@
-const AppError = require("../middlewares/errorHandler");
+const ErrorHandler = require("../utils/errorhandler");
 
 const handleCAstDBError = (err) => {
   const message = `resource not found, invalid ${err.path}`;
-  return new AppError(message, 400);
+  return new ErrorHandler(message, 400);
 };
 const handleValidationError = (err) => {
-  // looping over an object with object.values
   const message = Object.values(err.errors).map((value) => value.message);
-  return new AppError(message, 400);
+  return new ErrorHandler(message, 400);
 };
 const handleDuplicateError = (err) => {
   const message = `Duplicate ${Object.keys(err.keyValue)} entered`;
-  return new AppError(message, 400);
+  return new ErrorHandler(message, 400);
 };
 const handleJsonwebtokenError = (err) => {
   const message = ` json web Token is invalid ! try Agian!!!!`;
-  return new AppError(message, 400);
+  return new ErrorHandler(message, 400);
 };
 const handleTokenExpiredError = (err) => {
   const message = `json web Token has expired! try Agian!!!!`;
-  return new AppError(message, 400);
+  return new ErrorHandler(message, 400);
 };
 
 module.exports = (err, req, res, next) => {
