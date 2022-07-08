@@ -1,7 +1,8 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncError");
-const jwt = require('jsonwebtoken')
 
 const User = require("../model/usermodel");
+const { createJWT } = require("../utils/jwt");
+
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     const { name, email, password} = req.body;
@@ -20,7 +21,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   });
 
   const UserInfo = {name:user.name, userId:user._id, role:user.role}
-  const token = jwt.sign(UserInfo, "jwtsecret", { expiresIn:"1d"})
+
+  const token = createJWT({payload:UserInfo})
 
   res.status(200).json({
     success: true,
