@@ -61,7 +61,16 @@ if(!isPasswordRight){
 
 
 exports.logoutuser = catchAsyncErrors(async (req, res, next) => {
+
+  res.cookie('token', 'logout', {
+    httpOnly:true, expires: 
+    new Date(Date.now()) 
+      })
+
+
+
   res.status(200).json({
     success: true,
+    message:"user logged out "
   });
 });
