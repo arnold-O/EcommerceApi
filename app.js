@@ -17,7 +17,7 @@ const cookiePaser = require("cookie-parser");
 
 
 app.use(morgan("tiny"));
-app.use(cookiePaser())
+app.use(cookiePaser(process.env.JWT_SECRET))
 
 
 

@@ -19,6 +19,8 @@ const attachCookiesResponse = ({res, user})=>{
       expires: new Date(
         Date.now() + aDay
       ),
+      secure:process.env.NODE_ENV ==="production",
+      sign:true
     });
 
     res.status(200).json({
