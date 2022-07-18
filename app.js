@@ -4,6 +4,7 @@ const express = require("express");
 // all route section begins
 const ProductRoutes = require("./route/productRoutes");
 const AuthRoutes = require("./route/authRoute");
+const UserRoutes = require("./route/userRoute");
 
 const errorHandler = require("./middlewares/error");
 // express
@@ -26,6 +27,7 @@ app.get('/',(req, res)=>{
     console.log(req.cookies)
 })
 app.use("/api/v1/auth", AuthRoutes);
+app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/product", ProductRoutes);
 
 app.use(errorHandler);

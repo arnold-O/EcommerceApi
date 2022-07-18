@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllUsers } = require('../controllers/usercontroller')
+const { getAllUsers, getSingleUser, showCurrentUser, updatePassword, updateUser } = require('../controllers/usercontroller')
 
 const router = express()
 
@@ -7,8 +7,17 @@ const router = express()
 
 
 
-router.route('/alluser').post(getAllUsers)
+router.route('/').get(getAllUsers)
 
+
+
+// show me needs to be above 
+router.route('/showme').get(showCurrentUser)
+
+router.route('/updateUser').patch(updateUser)
+router.route('/updateUserPassword').post(updatePassword)
+
+router.route('/:id').get(getSingleUser)
 
 
 

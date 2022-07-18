@@ -15,7 +15,7 @@ exports.getAllUsers = catchAsyncError( async (req, res, next)=>{
 
 
     res.status(200).json({
-        messages:"all user Route"
+        messages:"all users Route"
     })
 })
 exports.getSingleUser = catchAsyncError( async (req, res, next)=>{
