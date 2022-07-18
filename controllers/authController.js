@@ -1,7 +1,7 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncError");
 
 const User = require("../model/usermodel");
-const { createJWT } = require("../utils/jwt");
+const { createJWT, attachCookiesResponse } = require("../utils/jwt");
 
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -22,13 +22,12 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
   const UserInfo = {name:user.name, userId:user._id, role:user.role}
 
-  const token = createJWT({payload:UserInfo})
+  // const token = createJWT({payload:UserInfo})
+  attachCookiesResponse({res, user:UserInfo})
 
-  res.status(200).json({
-    success: true,
-    UserInfo,
-    token
-  });
+ 
+
+ 
 });
 
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
@@ -36,6 +35,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+
+
 exports.logoutuser = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
