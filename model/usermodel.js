@@ -42,7 +42,7 @@ const isRight  =  await bcrypt.compare(userpassword, this.password)
 
 return  isRight
 
-
+  
 }
 
 module.exports = mongoose.model("User", userSchema);

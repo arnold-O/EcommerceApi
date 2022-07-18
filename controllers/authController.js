@@ -1,6 +1,7 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncError");
 
 const User = require("../model/usermodel");
+const ErrorHandler = require("../utils/errorhandler");
 const { createJWT, attachCookiesResponse } = require("../utils/jwt");
 
 
@@ -31,6 +32,27 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
+  const {email , password} = req.body
+
+  if(!email || !password){
+    return next(new ErrorHandler('please provide your email and password'))
+  }
+  const user = await User.findOne({email})
+  if(!user){
+    return next(new ErrorHandler('please your credentials are invalid'))
+  }
+
+const isPasswordRight = await user.correctPassword(password)
+
+if(!isPasswordRight){
+  return next(new ErrorHandler('please your credentials are invalid'))
+
+}
+  const tokenUser = {name:user.name, userId:user._id, role:user.role}
+
+  attachCookiesResponse({res, user:tokenUser})
+
+
   res.status(200).json({
     success: true,
   });
