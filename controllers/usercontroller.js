@@ -1,4 +1,6 @@
 const catchAsyncError = require("../middlewares/catchAsyncError");
+const User = require("../model/usermodel");
+const ErrorHandler = require("../utils/errorhandler");
 
 
 
@@ -12,18 +14,29 @@ const catchAsyncError = require("../middlewares/catchAsyncError");
 
 exports.getAllUsers = catchAsyncError( async (req, res, next)=>{
 
+    const users = await User.find({role:"user"}).select('-password').select("-__v")
+
+    res.status(200).json({users})
 
 
-    res.status(200).json({
-        messages:"all users Route"
-    })
+
+   
 })
 exports.getSingleUser = catchAsyncError( async (req, res, next)=>{
 
+    const {id} = req.params
+
+
+    const user = await User.findById({_id:req.params.id}).select('-password').select("-__v")
+
+    if(!user){
+        return next(new ErrorHandler('This user does not exist', 400))
+    }
+
 
 
     res.status(200).json({
-        messages:"single  user Route"
+       user
     })
 })
 exports.showCurrentUser = catchAsyncError( async (req, res, next)=>{
@@ -35,7 +48,6 @@ exports.showCurrentUser = catchAsyncError( async (req, res, next)=>{
     })
 })
 exports.updateUser = catchAsyncError( async (req, res, next)=>{
-
 
 
     res.status(200).json({
